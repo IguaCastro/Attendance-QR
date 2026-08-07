@@ -76,6 +76,9 @@
                             <td th:text="${classItem.sessionDate}"></td>
 
                             <td>
+                                <a th:href="@{/classes/qr/{id}(id=${classItem.id})}" class="btn btn-primary btn-sm">
+                                    Generate QR
+                                </a>
                                 <a th:href="@{/classes/edit/{id}(id=${classItem.id})}" class="btn btn-warning btn-sm">
                                     Edit
                                 </a>

@@ -5,14 +5,18 @@ import com.attendance.qrattendance.service.ClassSessionService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import com.attendance.qrattendance.service.QrCodeService;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 
 @Controller
 public class ClassSessionController {
-
+    private final QrCodeService qrCodeService;
     private final ClassSessionService classSessionService;
 
-    public ClassSessionController(ClassSessionService classSessionService) {
+    public ClassSessionController(ClassSessionService classSessionService, QrCodeService qrCodeService) {
         this.classSessionService = classSessionService;
+        this.qrCodeService = qrCodeService;
     }
 
     // Mostrar las sesiones y el formulario
@@ -54,4 +58,51 @@ public class ClassSessionController {
 
         return "redirect:/classes";
     }
+
+    @GetMapping("/classes/qr/{id}")
+    public String showQrCode(@PathVariable Long id, Model model) {
+
+        ClassSession classSession = classSessionService.getClassSessionById(id);
+
+        if (classSession == null) {
+            return "redirect:/classes";
+        }
+
+        model.addAttribute("classSession", classSession);
+
+        return "qr";
+    }
+
+    @GetMapping("/classes/qr/image/{id}")
+    public ResponseEntity<byte[]> generateQrImage(@PathVariable Long id) {
+
+        try {
+
+            ClassSession classSession = classSessionService.getClassSessionById(id);
+
+            if (classSession == null) {
+                return ResponseEntity.notFound().build();
+            }
+
+            String attendanceUrl = "http://192.168.0.14:8080/attendance/register/" + classSession.getId();
+
+            byte[] qrImage = qrCodeService.generateQrCode(
+                    attendanceUrl,
+                    300,
+                    300);
+
+            return ResponseEntity
+                    .ok()
+                    .contentType(MediaType.IMAGE_PNG)
+                    .body(qrImage);
+
+        } catch (Exception e) {
+
+            return ResponseEntity
+                    .internalServerError()
+                    .build();
+        }
+    }
+
+    
 }

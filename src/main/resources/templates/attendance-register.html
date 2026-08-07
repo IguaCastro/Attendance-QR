@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Register Attendance</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+</head>
+
+<body class="bg-light">
+
+<div class="container mt-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-6">
+
+            <div class="card shadow">
+
+                <div class="card-header bg-primary text-white text-center">
+                    <h2>Register Attendance</h2>
+                </div>
+
+                <div class="card-body">
+
+                    <!-- CLASS INFORMATION -->
+
+                    <div class="text-center mb-4">
+
+                        <h4 th:text="${classSession.courseName}">
+                            Course Name
+                        </h4>
+
+                        <p>
+                            Session Date:
+                            <strong th:text="${classSession.sessionDate}">
+                                Date
+                            </strong>
+                        </p>
+
+                    </div>
+
+                    <!-- SUCCESS MESSAGE -->
+
+                    <div th:if="${success}"
+                         class="alert alert-success"
+                         th:text="${success}">
+                    </div>
+
+                    <!-- ERROR MESSAGE -->
+
+                    <div th:if="${error}"
+                         class="alert alert-danger"
+                         th:text="${error}">
+                    </div>
+
+                    <!-- ATTENDANCE FORM -->
+
+                    <form th:action="@{/attendance/register}"
+                          method="post">
+
+                        <input type="hidden"
+                               name="classSessionId"
+                               th:value="${classSession.id}">
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Student Code
+                            </label>
+
+                            <input type="text"
+                                   name="studentCode"
+                                   class="form-control"
+                                   placeholder="Example: 2026-001"
+                                   required>
+
+                        </div>
+
+                        <button type="submit"
+                                class="btn btn-success w-100">
+
+                            Register Attendance
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>
