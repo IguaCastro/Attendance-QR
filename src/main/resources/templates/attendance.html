@@ -7,13 +7,9 @@
 
     <title>Attendance History - QR Attendance</title>
 
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
-        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
     <style>
         body {
@@ -179,244 +175,255 @@
 
 <body>
 
-<nav class="main-navbar">
+    <nav class="main-navbar">
 
-    <div class="container">
-
-        <div class="d-flex justify-content-between align-items-center">
-
-            <a href="/" class="text-decoration-none">
-
-                <div class="d-flex align-items-center">
-
-                    <div class="brand-logo me-3">
-                        <i class="bi bi-qr-code"></i>
-                    </div>
-
-                    <div>
-                        <div class="brand-title">
-                            QR Attendance
-                        </div>
-
-                        <div class="brand-subtitle">
-                            Student Management System
-                        </div>
-                    </div>
-
-                </div>
-
-            </a>
-
-            <a href="/" class="home-button">
-                <i class="bi bi-house-fill me-1"></i>
-                Home
-            </a>
-
-        </div>
-
-    </div>
-
-</nav>
-
-<section class="page-header">
-
-    <div class="container">
-
-        <div class="d-flex align-items-center">
-
-            <div class="page-icon me-3">
-                <i class="bi bi-clipboard2-check-fill"></i>
-            </div>
-
-            <div>
-                <h1>Attendance History</h1>
-
-                <p>
-                    Review student attendance records and class activity.
-                </p>
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-<div class="container">
-
-    <div class="card custom-card">
-
-        <div class="card-header">
+        <div class="container">
 
             <div class="d-flex justify-content-between align-items-center">
 
-                <h4 class="section-title">
-                    <i class="bi bi-clock-history text-danger me-2"></i>
-                    Attendance Records
-                </h4>
+                <a href="/" class="text-decoration-none">
 
-                <span class="badge bg-danger">
+                    <div class="d-flex align-items-center">
 
-                    <span th:text="${#lists.size(attendances)}"></span>
-                    Records
+                        <div class="brand-logo me-3">
+                            <i class="bi bi-qr-code"></i>
+                        </div>
 
-                </span>
-
-            </div>
-
-        </div>
-
-        <div class="card-body p-0">
-
-            <div class="table-responsive">
-
-                <table class="table attendance-table mb-0">
-
-                    <thead>
-
-                    <tr>
-                        <th>Student Code</th>
-                        <th>Student</th>
-                        <th>Course</th>
-                        <th>Session Date</th>
-                        <th>Attendance Time</th>
-                    </tr>
-
-                    </thead>
-
-                    <tbody>
-
-                    <tr th:each="attendanceItem : ${attendances}">
-
-                        <td>
-                            <span class="student-code"
-                                  th:text="${attendanceItem.student.studentCode}">
-                            </span>
-                        </td>
-
-                        <td>
-
-                            <div class="d-flex align-items-center">
-
-                                <div class="student-avatar">
-                                    <i class="bi bi-person-fill"></i>
-                                </div>
-
-                                <div class="fw-semibold">
-
-                                    <span th:text="${attendanceItem.student.firstName}"></span>
-
-                                    <span th:text="${attendanceItem.student.lastName}"></span>
-
-                                </div>
-
+                        <div>
+                            <div class="brand-title">
+                                QR Attendance
                             </div>
 
-                        </td>
+                            <div class="brand-subtitle">
+                                Student Management System
+                            </div>
+                        </div>
 
-                        <td>
+                    </div>
 
-                            <span class="course-badge">
+                </a>
 
-                                <i class="bi bi-book-fill me-1"></i>
-
-                                <span th:text="${attendanceItem.classSession.courseName}"></span>
-
-                            </span>
-
-                        </td>
-
-                        <td>
-
-                            <span class="date-badge">
-
-                                <i class="bi bi-calendar-event me-1"></i>
-
-                                <span th:text="${#temporals.format(attendanceItem.classSession.sessionDate, 'MMM d, yyyy')}"></span>
-
-                            </span>
-
-                        </td>
-
-                        <td>
-
-                            <span class="time-value">
-
-                                <i class="bi bi-clock me-1"></i>
-
-                                <span th:text="${#temporals.format(attendanceItem.attendanceTime, 'MMM d, yyyy - h:mm a')}"></span>
-
-                            </span>
-
-                        </td>
-
-                    </tr>
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
-            <div th:if="${#lists.isEmpty(attendances)}"
-                 class="text-center py-5 text-muted">
-
-                <i class="bi bi-clipboard-x"
-                   style="font-size: 3.5rem;"></i>
-
-                <h5 class="mt-3">
-                    No attendance records found
-                </h5>
-
-                <p>
-                    Attendance records will appear here after students register.
-                </p>
+                <a href="/" class="home-button">
+                    <i class="bi bi-house-fill me-1"></i>
+                    Home
+                </a>
 
             </div>
 
         </div>
 
-    </div>
+    </nav>
 
-    <div class="mt-4">
+    <section class="page-header">
 
-        <a href="/"
-           class="btn btn-outline-secondary">
+        <div class="container">
 
-            <i class="bi bi-arrow-left me-2"></i>
-            Back to Dashboard
+            <div class="d-flex align-items-center">
 
-        </a>
+                <div class="page-icon me-3">
+                    <i class="bi bi-clipboard2-check-fill"></i>
+                </div>
 
-        <a href="/classes"
-           class="btn btn-outline-primary ms-2">
+                <div>
+                    <h1>Attendance History</h1>
 
-            <i class="bi bi-qr-code me-2"></i>
-            Class Sessions
+                    <p>
+                        Review student attendance records and class activity.
+                    </p>
+                </div>
 
-        </a>
+            </div>
 
-    </div>
+        </div>
 
-</div>
-
-<footer class="footer">
+    </section>
 
     <div class="container">
 
-        <hr>
+        <div class="card custom-card">
 
-        <p class="mb-1">
-            QR Attendance System © 2026
-        </p>
+            <div class="card-header">
 
-        <small>
-            Student Attendance Management using QR Code Technology
-        </small>
+                <div class="d-flex justify-content-between align-items-center">
+
+                    <h4 class="section-title">
+                        <i class="bi bi-clock-history text-danger me-2"></i>
+                        Attendance Records
+                    </h4>
+
+                    <span class="badge bg-danger">
+
+                        <span th:text="${#lists.size(attendances)}"></span>
+                        Records
+
+                    </span>
+
+                </div>
+
+            </div>
+
+            <div class="card-body p-0">
+
+                <div class="table-responsive">
+
+                    <table class="table attendance-table mb-0">
+
+                        <thead>
+
+                            <tr>
+                                <th>Student Code</th>
+                                <th>Student</th>
+                                <th>Course</th>
+                                <th>Session Date</th>
+                                <th>Attendance Time</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            <tr th:each="attendanceItem : ${attendances}">
+
+                                <td>
+                                    <span class="student-code" th:text="${attendanceItem.student.studentCode}">
+                                    </span>
+                                </td>
+
+                                <td>
+
+                                    <div class="d-flex align-items-center">
+
+                                        <div class="student-avatar">
+                                            <i class="bi bi-person-fill"></i>
+                                        </div>
+
+                                        <div class="fw-semibold">
+
+                                            <span th:text="${attendanceItem.student.firstName}"></span>
+
+                                            <span th:text="${attendanceItem.student.lastName}"></span>
+
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+                                <td>
+
+                                    <span class="course-badge">
+
+                                        <i class="bi bi-book-fill me-1"></i>
+
+                                        <span th:text="${attendanceItem.classSession.courseName}"></span>
+
+                                    </span>
+
+                                </td>
+
+                                <td>
+
+                                    <span class="date-badge">
+
+                                        <i class="bi bi-calendar-event me-1"></i>
+
+                                        <span
+                                            th:text="${#temporals.format(attendanceItem.classSession.sessionDate, 'MMM d, yyyy')}"></span>
+
+                                    </span>
+
+                                </td>
+
+                                <td>
+
+                                    <span class="time-value">
+
+                                        <i class="bi bi-clock me-1"></i>
+
+                                        <span
+                                            th:text="${#temporals.format(attendanceItem.attendanceTime, 'MMM d, yyyy - h:mm a')}"></span>
+
+                                    </span>
+
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+                <div th:if="${#lists.isEmpty(attendances)}" class="text-center py-5 text-muted">
+
+                    <i class="bi bi-clipboard-x" style="font-size: 3.5rem;"></i>
+
+                    <h5 class="mt-3">
+                        No attendance records found
+                    </h5>
+
+                    <p>
+                        Attendance records will appear here after students register.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="mt-4">
+
+            <a href="/" class="btn btn-outline-secondary">
+
+                <i class="bi bi-arrow-left me-2"></i>
+                Back to Dashboard
+
+            </a>
+
+            <a href="/classes" class="btn btn-outline-primary ms-2">
+
+                <i class="bi bi-qr-code me-2"></i>
+                Class Sessions
+
+            </a>
+            <a href="/attendance/clear" class="btn btn-outline-danger ms-2"
+                onclick="return confirm('Are you sure you want to clear all attendance records?');">
+
+                <i class="bi bi-trash-fill me-2"></i>
+                Clear Attendance History
+
+            </a>
+
+        </div>
 
     </div>
 
-</footer>
+    <footer class="footer">
+        <div th:if="${successMessage}" class="alert alert-success shadow-sm">
+
+            <i class="bi bi-check-circle-fill me-2"></i>
+
+            <span th:text="${successMessage}"></span>
+
+        </div>
+        <div class="container">
+
+            <hr>
+
+            <p class="mb-1">
+                QR Attendance System © 2026
+            </p>
+
+            <small>
+                Student Attendance Management using QR Code Technology
+            </small>
+
+        </div>
+
+    </footer>
 
 </body>
+
 </html>

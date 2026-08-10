@@ -1,12 +1,14 @@
 package com.attendance.qrattendance.controller;
 
+import com.attendance.qrattendance.model.Attendance;
 import com.attendance.qrattendance.model.ClassSession;
 import com.attendance.qrattendance.service.AttendanceService;
 import com.attendance.qrattendance.service.ClassSessionService;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import com.attendance.qrattendance.model.Attendance;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class AttendanceController {
@@ -28,7 +30,8 @@ public class AttendanceController {
             @PathVariable Long classSessionId,
             Model model) {
 
-        ClassSession classSession = classSessionService.getClassSessionById(classSessionId);
+        ClassSession classSession =
+                classSessionService.getClassSessionById(classSessionId);
 
         if (classSession == null) {
             return "redirect:/";
@@ -46,11 +49,14 @@ public class AttendanceController {
             @RequestParam Long classSessionId,
             Model model) {
 
-        Attendance attendance = attendanceService.registerAttendance(
-                studentCode,
-                classSessionId);
+        Attendance attendance =
+                attendanceService.registerAttendance(
+                        studentCode,
+                        classSessionId
+                );
 
-        ClassSession classSession = classSessionService.getClassSessionById(classSessionId);
+        ClassSession classSession =
+                classSessionService.getClassSessionById(classSessionId);
 
         model.addAttribute("classSession", classSession);
 
@@ -58,25 +64,29 @@ public class AttendanceController {
 
             model.addAttribute(
                     "error",
-                    "Student code not found.");
+                    "Student code not found."
+            );
 
         } else if (attendance.getId() == null) {
 
             model.addAttribute(
                     "error",
-                    "Attendance has already been registered.");
+                    "Attendance has already been registered."
+            );
 
         } else {
 
             model.addAttribute(
                     "success",
-                    "Attendance registered successfully!");
+                    "Attendance registered successfully!"
+            );
 
             model.addAttribute(
                     "studentName",
                     attendance.getStudent().getFirstName()
                             + " "
-                            + attendance.getStudent().getLastName());
+                            + attendance.getStudent().getLastName()
+            );
         }
 
         return "attendance-register";
@@ -88,8 +98,24 @@ public class AttendanceController {
 
         model.addAttribute(
                 "attendances",
-                attendanceService.getAllAttendances());
+                attendanceService.getAllAttendances()
+        );
 
         return "attendance";
+    }
+
+    // Limpiar historial completo
+    @GetMapping("/attendance/clear")
+    public String clearAttendanceHistory(
+            RedirectAttributes redirectAttributes) {
+
+        attendanceService.clearAttendanceHistory();
+
+        redirectAttributes.addFlashAttribute(
+                "successMessage",
+                "Attendance history cleared successfully!"
+        );
+
+        return "redirect:/attendance";
     }
 }

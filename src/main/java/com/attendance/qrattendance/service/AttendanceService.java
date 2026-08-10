@@ -44,9 +44,11 @@ public class AttendanceService {
             return null;
         }
 
-        boolean alreadyRegistered = attendanceRepository.existsByStudentAndClassSession(
-                student,
-                classSession);
+        boolean alreadyRegistered =
+                attendanceRepository.existsByStudentAndClassSession(
+                        student,
+                        classSession
+                );
 
         if (alreadyRegistered) {
             return new Attendance();
@@ -63,5 +65,9 @@ public class AttendanceService {
 
     public List<Attendance> getAllAttendances() {
         return attendanceRepository.findAll();
+    }
+
+    public void clearAttendanceHistory() {
+        attendanceRepository.deleteAll();
     }
 }
