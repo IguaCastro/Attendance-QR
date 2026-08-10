@@ -28,12 +28,12 @@ public class AttendanceService {
         this.classSessionRepository = classSessionRepository;
     }
 
-    public String registerAttendance(String studentCode, Long classSessionId) {
+    public Attendance registerAttendance(String studentCode, Long classSessionId) {
 
         Student student = studentRepository.findByStudentCode(studentCode);
 
         if (student == null) {
-            return "STUDENT_NOT_FOUND";
+            return null;
         }
 
         ClassSession classSession = classSessionRepository
@@ -41,17 +41,15 @@ public class AttendanceService {
                 .orElse(null);
 
         if (classSession == null) {
-            return "CLASS_NOT_FOUND";
+            return null;
         }
 
-        boolean alreadyRegistered =
-                attendanceRepository.existsByStudentAndClassSession(
-                        student,
-                        classSession
-                );
+        boolean alreadyRegistered = attendanceRepository.existsByStudentAndClassSession(
+                student,
+                classSession);
 
         if (alreadyRegistered) {
-            return "ALREADY_REGISTERED";
+            return new Attendance();
         }
 
         Attendance attendance = new Attendance();
@@ -60,9 +58,7 @@ public class AttendanceService {
         attendance.setClassSession(classSession);
         attendance.setAttendanceTime(LocalDateTime.now());
 
-        attendanceRepository.save(attendance);
-
-        return "SUCCESS";
+        return attendanceRepository.save(attendance);
     }
 
     public List<Attendance> getAllAttendances() {

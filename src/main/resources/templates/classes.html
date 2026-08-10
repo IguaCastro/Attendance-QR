@@ -5,107 +5,562 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Class Sessions</title>
+    <title>Class Sessions - QR Attendance</title>
 
+    <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <style>
+        body {
+            background: #f5f8fc;
+            font-family: Arial, Helvetica, sans-serif;
+            color: #162033;
+        }
+
+        /* NAVBAR */
+
+        .main-navbar {
+            background: #071a2f;
+            padding: 12px 0;
+        }
+
+        .brand-logo {
+            width: 48px;
+            height: 48px;
+            background: white;
+            color: #0d6efd;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+        }
+
+        .brand-title {
+            color: white;
+            font-weight: 700;
+            font-size: 1.15rem;
+            line-height: 1.1;
+        }
+
+        .brand-subtitle {
+            color: #aeb9c7;
+            font-size: 0.75rem;
+        }
+
+        .home-button {
+            color: #dce3ec;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .home-button:hover {
+            color: white;
+        }
+
+        /* PAGE HEADER */
+
+        .page-header {
+            padding: 45px 0 30px;
+        }
+
+        .page-icon {
+            width: 65px;
+            height: 65px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #e7f8ef;
+            color: #198754;
+            font-size: 1.9rem;
+        }
+
+        .page-header h1 {
+            font-weight: 800;
+            margin-bottom: 5px;
+        }
+
+        .page-header p {
+            color: #6c788b;
+            margin: 0;
+        }
+
+        /* CARDS */
+
+        .custom-card {
+            border: none;
+            border-radius: 16px;
+            box-shadow: 0 5px 18px rgba(25, 40, 60, 0.08);
+        }
+
+        .custom-card .card-header {
+            background: white;
+            border-bottom: 1px solid #e9edf3;
+            padding: 20px 24px;
+            border-radius: 16px 16px 0 0;
+        }
+
+        .custom-card .card-body {
+            padding: 25px;
+        }
+
+        .section-title {
+            font-weight: 700;
+            margin: 0;
+        }
+
+        /* FORM */
+
+        .form-label {
+            font-weight: 600;
+            color: #445066;
+        }
+
+        .form-control {
+            border-radius: 9px;
+            padding: 11px 13px;
+            border: 1px solid #d8e0ea;
+        }
+
+        .form-control:focus {
+            border-color: #198754;
+            box-shadow: 0 0 0 0.2rem rgba(25, 135, 84, 0.12);
+        }
+
+        .save-button {
+            border-radius: 9px;
+            padding: 11px;
+            font-weight: 600;
+        }
+
+        /* TABLE */
+
+        .class-table thead th {
+            background: #f5f8fc;
+            color: #445066;
+            font-size: 0.9rem;
+            border-bottom: 1px solid #dfe6ef;
+            padding: 14px;
+        }
+
+        .class-table tbody td {
+            padding: 14px;
+            vertical-align: middle;
+        }
+
+        .class-table tbody tr:hover {
+            background: #f8fbff;
+        }
+
+        .course-name {
+            font-weight: 700;
+            color: #198754;
+        }
+
+        .date-badge {
+            background: #eef3ff;
+            color: #315da8;
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .btn-action {
+            border-radius: 7px;
+            padding: 6px 10px;
+            font-size: 0.85rem;
+        }
+
+        .qr-button {
+            background: #fff7df;
+            border: 1px solid #f4b400;
+            color: #a46d00;
+        }
+
+        .qr-button:hover {
+            background: #f4b400;
+            color: white;
+        }
+
+        /* FOOTER */
+
+        .footer {
+            margin-top: 45px;
+            padding: 25px 0 35px;
+            color: #6c788b;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+
+            .class-table {
+                min-width: 760px;
+            }
+
+        }
+    </style>
 </head>
 
-<body class="bg-light">
+<body>
 
-    <div class="container mt-5">
+    <!-- NAVBAR -->
 
-        <!-- CLASS FORM -->
-        <div class="card shadow mb-4">
+    <nav class="main-navbar">
 
-            <div class="card-header bg-success text-white">
-                <h2 class="text-center">Class Session</h2>
-            </div>
+        <div class="container">
 
-            <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center">
 
-                <form th:action="@{/classes/save}" th:object="${classSession}" method="post">
+                <a href="/" class="text-decoration-none">
 
-                    <input type="hidden" th:field="*{id}">
+                    <div class="d-flex align-items-center">
 
-                    <div class="mb-3">
-                        <label class="form-label">Course Name</label>
+                        <div class="brand-logo me-3">
+                            <i class="bi bi-qr-code"></i>
+                        </div>
 
-                        <input type="text" class="form-control" th:field="*{courseName}"
-                            placeholder="Example: English I" required>
+                        <div>
+
+                            <div class="brand-title">
+                                QR Attendance
+                            </div>
+
+                            <div class="brand-subtitle">
+                                Student Management System
+                            </div>
+
+                        </div>
+
                     </div>
 
-                    <div class="mb-3">
-                        <label class="form-label">Session Date</label>
+                </a>
 
-                        <input type="date" class="form-control" th:field="*{sessionDate}" required>
+                <a href="/" class="home-button">
+
+                    <i class="bi bi-house-fill me-1"></i>
+                    Home
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+    <!-- PAGE HEADER -->
+
+    <section class="page-header">
+
+        <div class="container">
+
+            <div class="d-flex align-items-center">
+
+                <div class="page-icon me-3">
+                    <i class="bi bi-journal-bookmark-fill"></i>
+                </div>
+
+                <div>
+
+                    <h1>Class Sessions</h1>
+
+                    <p>
+                        Create class sessions and generate QR codes
+                        for student attendance.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- CONTENT -->
+
+    <div class="container">
+        <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
+
+            <i class="bi bi-check-circle-fill me-2"></i>
+
+            <span th:text="${successMessage}"></span>
+
+            <button type="button" class="btn-close" data-bs-dismiss="alert">
+            </button>
+
+        </div>
+        <div class="row g-4">
+
+            <!-- FORM -->
+
+            <div class="col-lg-4">
+
+                <div class="card custom-card">
+
+                    <div class="card-header">
+
+                        <h4 class="section-title">
+
+                            <span th:if="${classSession.id == null}">
+                                <i class="bi bi-calendar-plus-fill text-success me-2"></i>
+                                New Class Session
+                            </span>
+
+                            <span th:unless="${classSession.id == null}">
+                                <i class="bi bi-pencil-square text-warning me-2"></i>
+                                Editing Class Session
+                            </span>
+
+                        </h4>
+
                     </div>
 
-                    <button type="submit" class="btn btn-success w-100">
-                        Save Class
-                    </button>
+                    <div class="card-body">
 
-                </form>
+                        <form th:action="@{/classes/save}" th:object="${classSession}" method="post">
+
+                            <!-- Hidden ID for Edit -->
+                            <input type="hidden" th:field="*{id}">
+
+                            <!-- COURSE NAME -->
+
+                            <div class="mb-3">
+
+                                <label class="form-label">
+                                    Course Name
+                                </label>
+
+                                <input type="text" class="form-control" th:field="*{courseName}"
+                                    placeholder="Example: English I" required>
+
+                            </div>
+
+                            <!-- DATE -->
+
+                            <div class="mb-4">
+
+                                <label class="form-label">
+                                    Session Date
+                                </label>
+
+                                <input type="date" class="form-control" th:field="*{sessionDate}" required>
+
+                            </div>
+
+                            <!-- SAVE / UPDATE -->
+
+                            <button type="submit" class="btn btn-success save-button w-100">
+
+                                <i class="bi bi-floppy-fill me-2"></i>
+
+                                <span th:if="${classSession.id == null}">
+                                    Save Class Session
+                                </span>
+
+                                <span th:unless="${classSession.id == null}">
+                                    Update Class Session
+                                </span>
+
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </div>
 
             </div>
+
+            <!-- CLASS LIST -->
+
+            <div class="col-lg-8">
+
+                <div class="card custom-card">
+
+                    <div class="card-header">
+
+                        <div class="d-flex justify-content-between align-items-center">
+
+                            <h4 class="section-title">
+
+                                <i class="bi bi-calendar3 text-success me-2"></i>
+
+                                Available Sessions
+
+                            </h4>
+
+                            <span class="badge bg-success">
+
+                                <span th:text="${#lists.size(classSessions)}"></span>
+
+                                Sessions
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="table-responsive">
+
+                            <table class="table class-table">
+
+                                <thead>
+
+                                    <tr>
+                                        <th>Course</th>
+                                        <th>Session Date</th>
+                                        <th>Actions</th>
+                                    </tr>
+
+                                </thead>
+
+                                <tbody>
+
+                                    <tr th:each="classItem : ${classSessions}">
+
+                                        <!-- COURSE -->
+
+                                        <td>
+
+                                            <div class="course-name">
+
+                                                <i class="bi bi-book-fill me-2"></i>
+
+                                                <span th:text="${classItem.courseName}"></span>
+
+                                            </div>
+
+                                        </td>
+
+                                        <!-- DATE -->
+
+                                        <td>
+
+                                            <span class="date-badge">
+
+                                                <i class="bi bi-calendar-event me-1"></i>
+
+                                                <span
+                                                    th:text="${#temporals.format(classItem.sessionDate, 'MMM d, yyyy')}">
+                                                </span>
+
+                                            </span>
+
+                                        </td>
+
+                                        <!-- ACTIONS -->
+
+                                        <td>
+
+                                            <!-- QR -->
+
+                                            <a th:href="@{/classes/qr/{id}(id=${classItem.id})}"
+                                                class="btn btn-action qr-button">
+
+                                                <i class="bi bi-qr-code me-1"></i>
+
+                                                QR
+
+                                            </a>
+
+                                            <!-- EDIT -->
+
+                                            <a th:href="@{/classes/edit/{id}(id=${classItem.id})}"
+                                                class="btn btn-warning btn-action">
+
+                                                <i class="bi bi-pencil-fill"></i>
+
+                                            </a>
+
+                                            <!-- DELETE -->
+
+                                            <a th:href="@{/classes/delete/{id}(id=${classItem.id})}"
+                                                class="btn btn-danger btn-action"
+                                                onclick="return confirm('Are you sure you want to delete this class session?');">
+
+                                                <i class="bi bi-trash-fill"></i>
+
+                                            </a>
+
+                                        </td>
+
+                                    </tr>
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                        <!-- EMPTY STATE -->
+
+                        <div th:if="${#lists.isEmpty(classSessions)}" class="text-center py-5 text-muted">
+
+                            <i class="bi bi-calendar-x" style="font-size: 3rem;"></i>
+
+                            <h5 class="mt-3">
+                                No class sessions available
+                            </h5>
+
+                            <p>
+                                Create your first class session using the form.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
         </div>
 
-        <!-- CLASS LIST -->
-        <div class="card shadow">
+        <!-- BACK BUTTON -->
 
-            <div class="card-header bg-dark text-white">
-                <h3>Class Sessions</h3>
-            </div>
+        <div class="mt-4">
 
-            <div class="card-body">
+            <a href="/" class="btn btn-outline-secondary">
 
-                <table class="table table-striped table-hover">
+                <i class="bi bi-arrow-left me-2"></i>
 
-                    <thead>
-                        <tr>
-                            <th>Course</th>
-                            <th>Session Date</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
+                Back to Dashboard
 
-                    <tbody>
-
-                        <tr th:each="classItem : ${classSessions}">
-
-                            <td th:text="${classItem.courseName}"></td>
-                            <td th:text="${classItem.sessionDate}"></td>
-
-                            <td>
-                                <a th:href="@{/classes/qr/{id}(id=${classItem.id})}" class="btn btn-primary btn-sm">
-                                    Generate QR
-                                </a>
-                                <a th:href="@{/classes/edit/{id}(id=${classItem.id})}" class="btn btn-warning btn-sm">
-                                    Edit
-                                </a>
-
-                                <a th:href="@{/classes/delete/{id}(id=${classItem.id})}" class="btn btn-danger btn-sm"
-                                    onclick="return confirm('Are you sure you want to delete this class session?');">
-                                    Delete
-                                </a>
-                            </td>
-
-                        </tr>
-
-                    </tbody>
-
-                </table>
-
-            </div>
-        </div>
-
-        <div class="mt-3">
-            <a href="/" class="btn btn-secondary">
-                Back to Home
             </a>
+
         </div>
 
     </div>
 
+    <!-- FOOTER -->
+
+    <footer class="footer">
+
+        <div class="container">
+
+            <hr>
+
+            <p class="mb-1">
+                QR Attendance System © 2026
+            </p>
+
+            <small>
+                Student Attendance Management using QR Code Technology
+            </small>
+
+        </div>
+
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import com.attendance.qrattendance.service.QrCodeService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class ClassSessionController {
@@ -31,9 +32,23 @@ public class ClassSessionController {
 
     // Guardar o actualizar una sesión
     @PostMapping("/classes/save")
-    public String saveClassSession(@ModelAttribute ClassSession classSession) {
+    public String saveClassSession(
+            @ModelAttribute ClassSession classSession,
+            RedirectAttributes redirectAttributes) {
+
+        boolean editing = classSession.getId() != null;
 
         classSessionService.saveClassSession(classSession);
+
+        if (editing) {
+            redirectAttributes.addFlashAttribute(
+                    "successMessage",
+                    "Class session updated successfully!");
+        } else {
+            redirectAttributes.addFlashAttribute(
+                    "successMessage",
+                    "Class session created successfully!");
+        }
 
         return "redirect:/classes";
     }
@@ -52,9 +67,15 @@ public class ClassSessionController {
 
     // Eliminar una sesión
     @GetMapping("/classes/delete/{id}")
-    public String deleteClassSession(@PathVariable Long id) {
+    public String deleteClassSession(
+            @PathVariable Long id,
+            RedirectAttributes redirectAttributes) {
 
         classSessionService.deleteClassSession(id);
+
+        redirectAttributes.addFlashAttribute(
+                "successMessage",
+                "Class session deleted successfully!");
 
         return "redirect:/classes";
     }
@@ -84,7 +105,7 @@ public class ClassSessionController {
                 return ResponseEntity.notFound().build();
             }
 
-            String attendanceUrl = "http://192.168.0.14:8080/attendance/register/" + classSession.getId();
+            String attendanceUrl = "http://192.168.0.4:8080/attendance/register/" + classSession.getId();
 
             byte[] qrImage = qrCodeService.generateQrCode(
                     attendanceUrl,
@@ -104,5 +125,4 @@ public class ClassSessionController {
         }
     }
 
-    
 }

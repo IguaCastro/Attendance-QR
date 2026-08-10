@@ -5,54 +5,350 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Attendance History</title>
+    <title>Attendance History - QR Attendance</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
-          rel="stylesheet">
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <style>
+        body {
+            background: #f5f8fc;
+            font-family: Arial, Helvetica, sans-serif;
+            color: #162033;
+        }
+
+        .main-navbar {
+            background: #071a2f;
+            padding: 12px 0;
+        }
+
+        .brand-logo {
+            width: 48px;
+            height: 48px;
+            background: white;
+            color: #0d6efd;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+        }
+
+        .brand-title {
+            color: white;
+            font-weight: 700;
+            font-size: 1.15rem;
+            line-height: 1.1;
+        }
+
+        .brand-subtitle {
+            color: #aeb9c7;
+            font-size: 0.75rem;
+        }
+
+        .home-button {
+            color: #dce3ec;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .home-button:hover {
+            color: white;
+        }
+
+        .page-header {
+            padding: 45px 0 30px;
+        }
+
+        .page-icon {
+            width: 65px;
+            height: 65px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #ffe9ec;
+            color: #dc3545;
+            font-size: 1.9rem;
+        }
+
+        .page-header h1 {
+            font-weight: 800;
+            margin-bottom: 5px;
+        }
+
+        .page-header p {
+            color: #6c788b;
+            margin: 0;
+        }
+
+        .custom-card {
+            border: none;
+            border-radius: 16px;
+            box-shadow: 0 5px 18px rgba(25, 40, 60, 0.08);
+        }
+
+        .custom-card .card-header {
+            background: white;
+            border-bottom: 1px solid #e9edf3;
+            padding: 20px 24px;
+            border-radius: 16px 16px 0 0;
+        }
+
+        .section-title {
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .attendance-table thead th {
+            background: #f5f8fc;
+            color: #445066;
+            font-size: 0.88rem;
+            padding: 14px;
+            white-space: nowrap;
+        }
+
+        .attendance-table tbody td {
+            padding: 15px 14px;
+            vertical-align: middle;
+        }
+
+        .attendance-table tbody tr:hover {
+            background: #f8fbff;
+        }
+
+        .student-code {
+            font-weight: 700;
+            color: #0d6efd;
+        }
+
+        .student-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: #eaf2ff;
+            color: #0d6efd;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+        }
+
+        .course-badge {
+            background: #e7f8ef;
+            color: #198754;
+            border-radius: 20px;
+            padding: 6px 11px;
+            font-size: 0.82rem;
+            font-weight: 600;
+        }
+
+        .date-badge {
+            background: #eef3ff;
+            color: #315da8;
+            border-radius: 20px;
+            padding: 6px 10px;
+            font-size: 0.82rem;
+        }
+
+        .time-value {
+            color: #596579;
+            font-size: 0.9rem;
+        }
+
+        .footer {
+            margin-top: 45px;
+            padding: 25px 0 35px;
+            color: #6c788b;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .attendance-table {
+                min-width: 900px;
+            }
+        }
+    </style>
 </head>
 
-<body class="bg-light">
+<body>
 
-<div class="container mt-5">
+<nav class="main-navbar">
 
-    <div class="card shadow">
+    <div class="container">
 
-        <div class="card-header bg-dark text-white">
-            <h2 class="text-center">Attendance History</h2>
+        <div class="d-flex justify-content-between align-items-center">
+
+            <a href="/" class="text-decoration-none">
+
+                <div class="d-flex align-items-center">
+
+                    <div class="brand-logo me-3">
+                        <i class="bi bi-qr-code"></i>
+                    </div>
+
+                    <div>
+                        <div class="brand-title">
+                            QR Attendance
+                        </div>
+
+                        <div class="brand-subtitle">
+                            Student Management System
+                        </div>
+                    </div>
+
+                </div>
+
+            </a>
+
+            <a href="/" class="home-button">
+                <i class="bi bi-house-fill me-1"></i>
+                Home
+            </a>
+
         </div>
 
-        <div class="card-body">
+    </div>
+
+</nav>
+
+<section class="page-header">
+
+    <div class="container">
+
+        <div class="d-flex align-items-center">
+
+            <div class="page-icon me-3">
+                <i class="bi bi-clipboard2-check-fill"></i>
+            </div>
+
+            <div>
+                <h1>Attendance History</h1>
+
+                <p>
+                    Review student attendance records and class activity.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<div class="container">
+
+    <div class="card custom-card">
+
+        <div class="card-header">
+
+            <div class="d-flex justify-content-between align-items-center">
+
+                <h4 class="section-title">
+                    <i class="bi bi-clock-history text-danger me-2"></i>
+                    Attendance Records
+                </h4>
+
+                <span class="badge bg-danger">
+
+                    <span th:text="${#lists.size(attendances)}"></span>
+                    Records
+
+                </span>
+
+            </div>
+
+        </div>
+
+        <div class="card-body p-0">
 
             <div class="table-responsive">
 
-                <table class="table table-striped table-hover">
+                <table class="table attendance-table mb-0">
 
                     <thead>
+
                     <tr>
                         <th>Student Code</th>
-                        <th>Student Name</th>
+                        <th>Student</th>
                         <th>Course</th>
                         <th>Session Date</th>
                         <th>Attendance Time</th>
                     </tr>
+
                     </thead>
 
                     <tbody>
 
                     <tr th:each="attendanceItem : ${attendances}">
 
-                        <td th:text="${attendanceItem.student.studentCode}"></td>
-
                         <td>
-                            <span th:text="${attendanceItem.student.firstName}"></span>
-                            <span th:text="${attendanceItem.student.lastName}"></span>
+                            <span class="student-code"
+                                  th:text="${attendanceItem.student.studentCode}">
+                            </span>
                         </td>
 
-                        <td th:text="${attendanceItem.classSession.courseName}"></td>
+                        <td>
 
-                        <td th:text="${attendanceItem.classSession.sessionDate}"></td>
+                            <div class="d-flex align-items-center">
 
-                        <td th:text="${attendanceItem.attendanceTime}"></td>
+                                <div class="student-avatar">
+                                    <i class="bi bi-person-fill"></i>
+                                </div>
+
+                                <div class="fw-semibold">
+
+                                    <span th:text="${attendanceItem.student.firstName}"></span>
+
+                                    <span th:text="${attendanceItem.student.lastName}"></span>
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+                        <td>
+
+                            <span class="course-badge">
+
+                                <i class="bi bi-book-fill me-1"></i>
+
+                                <span th:text="${attendanceItem.classSession.courseName}"></span>
+
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            <span class="date-badge">
+
+                                <i class="bi bi-calendar-event me-1"></i>
+
+                                <span th:text="${#temporals.format(attendanceItem.classSession.sessionDate, 'MMM d, yyyy')}"></span>
+
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            <span class="time-value">
+
+                                <i class="bi bi-clock me-1"></i>
+
+                                <span th:text="${#temporals.format(attendanceItem.attendanceTime, 'MMM d, yyyy - h:mm a')}"></span>
+
+                            </span>
+
+                        </td>
 
                     </tr>
 
@@ -63,21 +359,64 @@
             </div>
 
             <div th:if="${#lists.isEmpty(attendances)}"
-                 class="alert alert-info text-center">
-                No attendance records found.
+                 class="text-center py-5 text-muted">
+
+                <i class="bi bi-clipboard-x"
+                   style="font-size: 3.5rem;"></i>
+
+                <h5 class="mt-3">
+                    No attendance records found
+                </h5>
+
+                <p>
+                    Attendance records will appear here after students register.
+                </p>
+
             </div>
 
         </div>
 
     </div>
 
-    <div class="mt-3">
-        <a href="/" class="btn btn-secondary">
-            Back to Home
+    <div class="mt-4">
+
+        <a href="/"
+           class="btn btn-outline-secondary">
+
+            <i class="bi bi-arrow-left me-2"></i>
+            Back to Dashboard
+
         </a>
+
+        <a href="/classes"
+           class="btn btn-outline-primary ms-2">
+
+            <i class="bi bi-qr-code me-2"></i>
+            Class Sessions
+
+        </a>
+
     </div>
 
 </div>
+
+<footer class="footer">
+
+    <div class="container">
+
+        <hr>
+
+        <p class="mb-1">
+            QR Attendance System © 2026
+        </p>
+
+        <small>
+            Student Attendance Management using QR Code Technology
+        </small>
+
+    </div>
+
+</footer>
 
 </body>
 </html>
